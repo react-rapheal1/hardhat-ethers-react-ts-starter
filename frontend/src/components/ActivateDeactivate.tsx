@@ -37,28 +37,62 @@ function getErrorMessage(error: Error): string {
 }
 
 const StyledActivateDeactivateDiv = styled.div`
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   place-self: center;
   align-items: center;
+  padding-top: 30px;
 `;
 
+// Fantastic Activate Button
 const StyledActivateButton = styled.button`
   width: 150px;
-  height: 2rem;
-  border-radius: 1rem;
-  border-color: green;
+  height: 2.5rem; /* Slightly taller for better visual balance */
+  border-radius: 1.5rem; /* More rounded for a modern look */
+  background: linear-gradient(90deg, #32cd32, #2e8b57); /* Gradient effect */
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none; /* Removes border for a cleaner look */
   cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(50, 205, 50, 0.3); /* Adds subtle shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+    box-shadow: 0px 8px 12px rgba(50, 205, 50, 0.5); /* Bigger shadow on hover */
+  }
+
+  &:active {
+    transform: scale(0.95); /* Pressed-in effect */
+    box-shadow: 0px 2px 4px rgba(50, 205, 50, 0.2); /* Reduces shadow on click */
+  }
 `;
 
+// Fantastic Deactivate Button
 const StyledDeactivateButton = styled.button`
   width: 150px;
-  height: 2rem;
-  border-radius: 1rem;
-  border-color: red;
+  height: 2.5rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(90deg, #ff6347, #dc143c); /* Gradient effect */
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
   cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(255, 99, 71, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 8px 12px rgba(255, 99, 71, 0.5);
+  }
+
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0px 2px 4px rgba(255, 99, 71, 0.2);
+  }
 `;
 
 function Activate(): ReactElement {

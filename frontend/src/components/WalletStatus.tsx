@@ -7,12 +7,10 @@ import { Provider } from '../utils/provider';
 type CleanupFunction = (() => void) | undefined;
 
 const StyledWalletStatusDiv = styled.div`
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 0.6fr 0.1fr 0.6fr 1fr 0.1fr 0.6fr 0.5fr 0.1fr 1.1fr 0.4fr 0.1fr 1fr 0.9fr 0.1fr 0.7fr 0.1fr;
-  grid-gap: 10px;
-  place-self: center;
-  align-items: center;
+   display: flex;
+   fontweight: 400;
+  flex-direction: column;
+  gap: 15px; /* Space between items */
 `;
 
 const StyledStatusIcon = styled.h1`
@@ -23,15 +21,16 @@ function ChainId(): ReactElement {
   const { chainId } = useWeb3React<Provider>();
 
   return (
-    <>
-      <span>
-        <strong>Chain Id</strong>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+           <span style={{display: 'flex', fontFamily: 'Arial, Helvetica, sans-serif'}}>
+        <strong >Chain Id :</strong>
       </span>
       <span role="img" aria-label="chain">
         ⛓
       </span>
-      <span>{chainId ?? ''}</span>
-    </>
+      <span style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: 'red'}}>
+        {chainId ?? ''}</span>
+    </div>
   );
 }
 
@@ -78,15 +77,17 @@ function BlockNumber(): ReactElement {
   }, [library, chainId]); // ensures refresh if referential identity of library doesn't change across chainIds
 
   return (
-    <>
-      <span>
-        <strong>Block Number</strong>
-      </span>
-      <span role="img" aria-label="numbers">
-        🔢
-      </span>
-      <span>{blockNumber === null ? 'Error' : blockNumber ?? ''}</span>
-    </>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <span style={{ fontWeight: 'bold' }}>
+    Block Number
+  </span>
+  <span role="img" aria-label="numbers" style={{ marginLeft: '5px' }}>
+    🔢
+  </span>
+  <span style={{ marginLeft: '10px',  color: 'red' }}>
+    {blockNumber === null ? 'Error' : blockNumber ?? ''}
+  </span>
+    </div>
   );
 }
 
@@ -94,14 +95,14 @@ function Account(): ReactElement {
   const { account } = useWeb3React<Provider>();
 
   return (
-    <>
-      <span>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+    <span>
         <strong>Account</strong>
       </span>
       <span role="img" aria-label="robot">
         🤖
       </span>
-      <span>
+      <span style={{ color: 'red' }}>
         {typeof account === 'undefined'
           ? ''
           : account
@@ -110,7 +111,7 @@ function Account(): ReactElement {
             )}`
           : ''}
       </span>
-    </>
+    </div>
   );
 }
 
@@ -166,21 +167,21 @@ function Balance(): ReactElement {
   }, [account, library, chainId]); // ensures refresh if referential identity of library doesn't change across chainIds
 
   return (
-    <>
-      <span>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+    <span>
         <strong>Balance</strong>
       </span>
       <span role="img" aria-label="gold">
         💰
       </span>
-      <span>
+      <span style={{ color: 'red' }}>
         {balance === null
           ? 'Error'
           : balance
           ? `Ξ${Math.round(+ethers.utils.formatEther(balance) * 1e4) / 1e4}`
           : ''}
       </span>
-    </>
+    </div>
   );
 }
 
@@ -236,15 +237,15 @@ function NextNonce(): ReactElement {
   }, [account, library, chainId]); // ensures refresh if referential identity of library doesn't change across chainIds
 
   return (
-    <>
-      <span>
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+    <span>
         <strong>Next Nonce</strong>
       </span>
       <span role="img" aria-label="gold">
         #️⃣
-      </span>
-      <span>{nextNonce === null ? 'Error' : nextNonce ?? ''}</span>
-    </>
+      </span >
+      <span style={{ color: 'red' }}>{nextNonce === null ? 'Error' : nextNonce ?? ''}</span>
+    </div>
   );
 }
 
@@ -264,7 +265,8 @@ export function WalletStatus(): ReactElement {
       <Account />
       <Balance />
       <NextNonce />
-      <StatusIcon />
+      {/*
+      <StatusIcon /> */}
     </StyledWalletStatusDiv>
   );
 }

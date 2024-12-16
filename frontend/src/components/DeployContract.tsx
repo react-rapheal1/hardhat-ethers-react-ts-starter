@@ -1,7 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { Contract, ethers, Signer } from 'ethers';
 import {
-  ChangeEvent,
   MouseEvent,
   ReactElement,
   useEffect,
@@ -10,39 +9,12 @@ import {
 import styled from 'styled-components';
 import GreeterArtifact from '../artifacts/contracts/Greeter.sol/Greeter.json';
 import { Provider } from '../utils/provider';
-import { SectionDivider } from './SectionDivider';
 
 const StyledDeployContractButton = styled.button`
-  width: 180px;
-  height: 2rem;
-  border-radius: 1rem;
-  border-color: blue;
-  cursor: pointer;
-  place-self: center;
-`;
-
-const StyledGreetingDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  place-self: center;
-  align-items: center;
-  gap: 5px;
-`;
-
-const StyledLabel = styled.label`
-  font-weight: bold;
-`;
-
-const StyledInput = styled.input`
-  padding: 0.4rem 0.6rem;
-  line-height: 2fr;
-`;
-
-const StyledButton = styled.button`
-   width: 150px;
+    width: 250px;
   height: 2.5rem; /* Slightly taller for better visual balance */
   border-radius: 1.5rem; /* More rounded for a modern look */
-  background: linear-gradient(90deg,rgb(39, 104, 218), #2e8b57); /* Gradient effect */
+  background: linear-gradient(90deg,rgb(39, 104, 218),rgb(227, 154, 28)); /* Gradient effect */
   color: white;
   font-weight: bold;
   font-size: 1rem;
@@ -50,20 +22,11 @@ const StyledButton = styled.button`
   cursor: pointer;
   box-shadow: 0px 4px 6px rgba(50, 205, 50, 0.3); /* Adds subtle shadow */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-  &:hover {
-    transform: scale(1.1); /* Slight zoom effect */
-    box-shadow: 0px 8px 12px rgba(50, 205, 50, 0.5); /* Bigger shadow on hover */
-  }
-
-  &:active {
-    transform: scale(0.95); /* Pressed-in effect */
-    box-shadow: 0px 2px 4px rgba(50, 205, 50, 0.2); /* Reduces shadow on click */
-  }
+  place-self: center;
 `;
 
 
-export function Greeter(): ReactElement {
+export function DeployContract(): ReactElement {
   const context = useWeb3React<Provider>();
   const { library, active } = context;
 
@@ -136,11 +99,6 @@ export function Greeter(): ReactElement {
     deployGreeterContract(signer);
   }
 
-  function handleGreetingChange(event: ChangeEvent<HTMLInputElement>): void {
-    event.preventDefault();
-    setGreetingInput(event.target.value);
-  }
-
   function handleGreetingSubmit(event: MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
 
@@ -178,7 +136,7 @@ export function Greeter(): ReactElement {
 
   return (
     <>
-      {/* <StyledDeployContractButton
+      <StyledDeployContractButton
         disabled={!active || greeterContract ? true : false}
         style={{
           cursor: !active || greeterContract ? 'not-allowed' : 'pointer',
@@ -187,44 +145,8 @@ export function Greeter(): ReactElement {
         onClick={handleDeployContract}
       >
         Deploy Greeter Contract
-      </StyledDeployContractButton> */}
-      <StyledGreetingDiv>
-        <StyledLabel>Contract address</StyledLabel>
-        <div>
-          {greeterContractAddr ? (
-            greeterContractAddr
-          ) : (
-            <em>{`<Contract not yet deployed>`}</em>
-          )}
-        </div>
-        {/* empty placeholder div below to provide empty first row, 3rd col div for a 2x3 grid */}
-        <div></div>
-        <StyledLabel>Current greeting</StyledLabel>
-        <div>
-          {greeting ? greeting : <em>{`<Contract not yet deployed>`}</em>}
-        </div>
-        {/* empty placeholder div below to provide empty first row, 3rd col div for a 2x3 grid */}
-        <div></div>
-        <StyledLabel htmlFor="greetingInput">Set new greeting</StyledLabel>
-        <StyledInput
-          id="greetingInput"
-          type="text"
-          placeholder={greeting ? '' : '<Contract not yet deployed>'}
-          onChange={handleGreetingChange}
-          style={{ fontStyle: greeting ? 'normal' : 'italic' }}
-        ></StyledInput>
-        <StyledButton
-          disabled={!active || !greeterContract ? true : false}
-          style={{
-            cursor: !active || !greeterContract ? 'not-allowed' : 'pointer',
-            borderColor: !active || !greeterContract ? 'unset' : 'blue'
-          }}
-          onClick={handleGreetingSubmit}
-        >
-          Submit
-        </StyledButton>
-        
-      </StyledGreetingDiv>
+      </StyledDeployContractButton>
+
     </>
   );
 }
